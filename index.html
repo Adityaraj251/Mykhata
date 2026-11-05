@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0B1020">
+  <title>My Money Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">₹</span><span>My Money<br><b>Manager</b></span></a>
+      <nav id="mainNav" aria-label="Main navigation">
+        <button class="nav-link active" data-view="dashboard"><span>▦</span> Dashboard</button>
+        <button class="nav-link" data-view="income"><span>↗</span> Income</button>
+        <button class="nav-link" data-view="expenses"><span>↘</span> Expenses</button>
+        <button class="nav-link" data-view="receivables"><span>⇠</span> To Receive</button>
+        <button class="nav-link" data-view="payables"><span>⇢</span> To Pay</button>
+        <button class="nav-link" data-view="transactions"><span>≡</span> Transactions</button>
+        <button class="nav-link" data-view="reports"><span>▥</span> Reports</button>
+        <button class="nav-link" data-view="settings"><span>⚙</span> Data & Settings</button>
+      </nav>
+      <div class="sidebar-foot"><span class="status-dot"></span> Saved on this device</div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div><p class="eyebrow" id="todayLabel">PERSONAL FINANCE</p><h1 id="pageTitle">Dashboard</h1></div>
+        <button class="primary-btn" id="quickAddBtn">＋ Add transaction</button>
+      </header>
+
+      <section class="view active" id="view-dashboard">
+        <div class="welcome-row"><div><h2>Your money at a glance</h2><p class="muted">A simple overview of your personal finances.</p></div><span class="date-chip" id="todayChip"></span></div>
+        <div class="summary-grid">
+          <article class="summary-card"><div class="card-top"><span>Total money received</span><span class="metric-icon green">↗</span></div><strong id="totalIncome">₹0</strong><small>Regular income</small></article>
+          <article class="summary-card"><div class="card-top"><span>Total money spent</span><span class="metric-icon red">↘</span></div><strong id="totalExpense">₹0</strong><small>Recorded expenses</small></article>
+          <article class="summary-card featured"><div class="card-top"><span>Available balance</span><span class="metric-icon blue">₹</span></div><strong id="balance">₹0</strong><small>Including borrowing and lending</small></article>
+          <article class="summary-card"><div class="card-top"><span>Yet to receive</span><span class="metric-icon cyan">⇠</span></div><strong id="toReceive">₹0</strong><small>Outstanding receivables</small></article>
+          <article class="summary-card"><div class="card-top"><span>Yet to pay</span><span class="metric-icon orange">⇢</span></div><strong id="toPay">₹0</strong><small>Outstanding liabilities</small></article>
+        </div>
+
+        <div class="content-grid">
+          <section class="panel"><div class="panel-heading"><div><h3>Recent transactions</h3><p class="muted">Your latest money activity</p></div><button class="text-btn" data-goto="transactions">View all</button></div><div id="recentTransactions" class="table-wrap"></div></section>
+          <section class="panel"><div class="panel-heading"><div><h3>Upcoming payments</h3><p class="muted">Expected money movements</p></div></div><div id="upcomingList" class="upcoming-list"></div></section>
+        </div>
+      </section>
+
+      <section class="view" id="view-income">
+        <div class="section-toolbar"><div><h2>Income</h2><p class="muted">Track money you have received.</p></div><button class="primary-btn" data-open-form="income">＋ Add income</button></div>
+        <section class="panel"><div id="incomeTable" class="table-wrap"></div></section>
+      </section>
+
+      <section class="view" id="view-expenses">
+        <div class="section-toolbar"><div><h2>Expenses</h2><p class="muted">Keep track of where your money goes.</p></div><button class="primary-btn" data-open-form="expense">＋ Add expense</button></div>
+        <section class="panel"><div id="expenseTable" class="table-wrap"></div></section>
+        <section class="panel"><div class="panel-heading"><div><h3>Category-wise spending</h3><p class="muted">Based on all recorded expenses.</p></div></div><div id="categoryBreakdown" class="category-breakdown"></div></section>
+      </section>
+
+      <section class="view" id="view-receivables">
+        <div class="section-toolbar"><div><h2>Money to receive</h2><p class="muted">Track money given to other people.</p></div><button class="primary-btn" data-open-form="lend">＋ Record money given</button></div>
+        <section class="panel"><div id="receivablesTable" class="table-wrap"></div></section>
+      </section>
+
+      <section class="view" id="view-payables">
+        <div class="section-toolbar"><div><h2>Money to pay</h2><p class="muted">Track money you have borrowed and need to return.</p></div><button class="primary-btn" data-open-form="borrow">＋ Record borrowed money</button></div>
+        <section class="panel"><div id="payablesTable" class="table-wrap"></div></section>
+      </section>
+
+      <section class="view" id="view-transactions">
+        <div class="section-toolbar"><div><h2>Transaction history</h2><p class="muted">All your income, expenses, loans and repayments in one place.</p></div></div>
+        <section class="panel">
+          <div class="filters">
+            <input id="transactionSearch" type="search" placeholder="Search title, person or category…">
+            <select id="typeFilter"><option value="all">All types</option><option>Income</option><option>Expense</option><option>Borrowed</option><option>Lent</option><option>Repayment</option><option>Returned</option></select>
+            <input id="dateFilter" type="month" aria-label="Filter by month">
+            <select id="sortFilter"><option value="newest">Newest first</option><option value="oldest">Oldest first</option></select>
+          </div>
+          <div id="transactionsTable" class="table-wrap"></div>
+        </section>
+      </section>
+
+      <section class="view" id="view-reports">
+        <div class="section-toolbar"><div><h2>Reports & analytics</h2><p class="muted">Understand your monthly money flow.</p></div><input type="month" id="reportMonth" class="month-input"></div>
+        <div class="summary-grid report-cards">
+          <article class="summary-card"><span class="muted">Monthly income</span><strong id="monthlyIncome">₹0</strong></article>
+          <article class="summary-card"><span class="muted">Monthly expenses</span><strong id="monthlyExpense">₹0</strong></article>
+          <article class="summary-card"><span class="muted">Monthly savings</span><strong id="monthlySavings">₹0</strong></article>
+        </div>
+        <div class="content-grid">
+          <section class="panel"><div class="panel-heading"><div><h3>Expense breakdown</h3><p class="muted">Selected month</p></div></div><div id="reportCategories" class="category-breakdown"></div></section>
+          <section class="panel"><div class="panel-heading"><div><h3>Daily activity</h3><p class="muted">Selected month, grouped by date</p></div></div><div id="dailySummary" class="simple-list"></div></section>
+        </div>
+        <section class="panel"><div class="panel-heading"><div><h3>Monthly summary</h3><p class="muted">Income and expenses by month</p></div></div><div id="monthlySummary" class="table-wrap"></div></section>
+      </section>
+
+      <section class="view" id="view-settings">
+        <div class="section-toolbar"><div><h2>Data & settings</h2><p class="muted">Your records are stored locally in this browser.</p></div></div>
+        <div class="settings-grid">
+          <section class="panel settings-card"><div class="settings-icon">⇩</div><h3>Export your data</h3><p class="muted">Download all your records as a JSON backup file.</p><button class="primary-btn" id="exportBtn">Export JSON</button></section>
+          <section class="panel settings-card"><div class="settings-icon">⇧</div><h3>Import your data</h3><p class="muted">Restore records from a previous JSON backup. This replaces current records.</p><label class="secondary-btn file-label">Choose JSON file<input type="file" id="importFile" accept=".json,application/json"></label></section>
+          <section class="panel settings-card danger-card"><div class="settings-icon">⌫</div><h3>Clear all data</h3><p class="muted">Permanently remove all records saved in this browser.</p><button class="danger-btn" id="clearBtn">Clear all records</button></section>
+        </div>
+        <p class="privacy-note">Privacy note: LocalStorage is tied to this browser and device. Clearing browser data may remove your records. Export backups regularly.</p>
+      </section>
+    </main>
+  </div>
+
+  <dialog id="recordDialog">
+    <form id="recordForm" method="dialog">
+      <div class="modal-head"><div><p class="eyebrow">MY MONEY MANAGER</p><h2 id="formTitle">Add record</h2></div><button type="button" class="icon-btn" id="closeDialog" aria-label="Close">×</button></div>
+      <div id="formFields" class="form-grid"></div>
+      <p class="form-error" id="formError" role="alert"></p>
+      <div class="modal-actions"><button type="button" class="secondary-btn" id="cancelForm">Cancel</button><button type="submit" class="primary-btn">Save record</button></div>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
